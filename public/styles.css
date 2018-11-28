@@ -1,0 +1,15 @@
+*{
+    font-family: "Trebuchet MS", Helvetica, Arial;
+}
+
+
+.welcomecontainer {
+    border: 3px solid black;
+    background: violet;
+    padding: 20px;
+}
+
+.registration-container {
+    border: 3px solid navy;
+    background: white;
+}

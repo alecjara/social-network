@@ -35,7 +35,7 @@ export default class Registration extends React.Component {
             if (resp.data.success) {
                 location.replace('/');
             } else {
-                //this.setState({success: false});
+                this.setState({error: true});
                 console.log("Error in handleSubmit");
             }
         });
@@ -45,6 +45,7 @@ export default class Registration extends React.Component {
         return (
             <div className="registration-container">
                 <h1>Please Register!!!</h1>
+                {this.state.error && <div>Error, please try again!!</div>}
                 <form onSubmit={this.handleSubmit}>
                     <input onChange= {this.handleChange} name="firstname" type="text" placeholder="first name" />
                     <input onChange= {this.handleChange} name="lastname" type="text" placeholder="last name" />

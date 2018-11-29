@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Welcome from "./welcome";
 import Logo from "./logo";
+import Login from "./login";
 //to put html on the page! this is the only place where we need to add ReactDOM but react
 //needs to be imported in many places.
 //I can do something like this:
@@ -15,6 +16,10 @@ if (location.pathname === "/welcome") {
 
 if (location.pathname ==="/") {
     component = <Logo />;
+}
+
+if (location.pathname ==="/login") {
+    component = <Login />;
 }
 
 //ReactDOM should only be called ONCE IN THE WHOLE PROJECT!!!!!

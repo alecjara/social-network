@@ -4,8 +4,9 @@ const app = express();
 const compression = require('compression');
 const bodyparser = require("body-parser");
 const db = require("./db");
-const { hash } = require("./bcrypt");  //I need to add after hash, compare for login
+const { hash, compare } = require("./bcrypt");
 const cookieSession = require("cookie-session");
+const csurf = require("csurf");
 
 app.disable("x-powered-by");
 
@@ -18,6 +19,15 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
+
+//csurf always after cookieSession and bodyparser
+app.use(csurf());
+
+app.use(function(req, res, next){
+    res.cookie('mytoken', req.csrfToken());
+    next();
+});
+
 
 app.use(express.static('./public'));
 
@@ -72,6 +82,28 @@ app.post("/registration", (req, res) => {
     }
 
 }); //end post registration
+
+app.post("/login", (req, res) => {
+    db.getUser(req.body.email).then(result => {
+        return compare(req.body.password, result.rows[0].password)
+            .then(doesMatch => {
+                if (doesMatch === true) {
+                    req.session.user_id = result.rows[0].user_id;
+                    res.json({success: true});
+                } else {
+                    res.json({success: false});
+                }
+            }).catch(err => {
+                res.json({success: false});
+                console.log("error in post login: ", err);
+            });
+    }).catch(err => {
+        res.json({success: false});
+        console.log("second error in post login: ", err);
+    });
+});
+
+//---end here
 
 
 

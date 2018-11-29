@@ -8,3 +8,12 @@ exports.createUser = function(firstname, lastname, email, password) {
     RETURNING id, firstname, lastname`,
     [firstname || null, lastname || null, email || null, password|| null]);
 };
+
+exports.getUser = function(email) {
+    return db.query(
+        `SELECT users.id AS "user_id", users.password
+        FROM users
+        WHERE users.email = $1`,
+        [email]
+    );
+};

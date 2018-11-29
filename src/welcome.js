@@ -5,13 +5,29 @@
 //the user is logged in or not:
 import React from 'react';
 import Registration from "./registration";
+import Login from "./login";
+//react router: HashRouter, BrowserRouter(don't add a hash in the url)
+//for the not logged in we use HashRouter and for logged it we will use BrowserRouter
+import {HashRouter, Route} from "react-router-dom";
 //components are always with capital letters (if it is not caps then react will read it as html instead of react)
 //we need to export this so we can use it in other files so we add export default
 export default function Welcome() {
     return (
-        <div className="welcomecontainer">
+        <div className="welcome-container">
             <h1>Welcome!</h1>
-            <Registration />
+
+            <HashRouter>
+                <div>
+                    <Route exact path = "/" component = {Registration} />
+                    <Route path = "/login" component= {Login} />
+                </div>
+            </HashRouter>
+
         </div>
     );
 }
+// INSIDE THE <HashRouter> we are doing this with Route ...:
+// if (the url is /), then render Registration
+// if (the url is /login), then render the Login component
+
+//we cannot use <a> in React we need to use Link!

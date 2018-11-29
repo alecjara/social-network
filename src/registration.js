@@ -1,5 +1,8 @@
 import React from 'react';
-import axios from "axios";
+//we are getting axios now from our local axios file so i need to add ./
+import axios from "./axios";
+//Link is the jsx tag instead of <a> and we have to import it every where we need it:
+import {Link} from "react-router-dom";
 //we need to add state to this so we will use class:
 //child of welcome so I need to import in welcome
 //every class has extends React.Component
@@ -28,7 +31,7 @@ export default class Registration extends React.Component {
     handleSubmit(e) {
         //we need this so we can stop our page to reload when we click register button.
         e.preventDefault();
-        console.log("handleSubmit Running!:", this.state);
+        console.log("handleSubmit in registration Running!:", this.state);
         axios.post('/registration', this.state).then(resp => {
             console.log("resp in then on post /registration", resp);
             //if everything goes well and the user is registered we redirect him to /ROUTE
@@ -36,7 +39,7 @@ export default class Registration extends React.Component {
                 location.replace('/');
             } else {
                 this.setState({error: true});
-                console.log("Error in handleSubmit");
+                console.log("Error in registration handleSubmit");
             }
         });
     }
@@ -53,7 +56,7 @@ export default class Registration extends React.Component {
                     <input onChange= {this.handleChange} name="password" type="password" placeholder="password" />
                     <button>Register</button>
                 </form>
-                <h3>If you are already a member, please <a href="login">log in</a></h3>
+                <h3>If you are already a member, please <Link to="/login">login!</Link></h3>
             </div>
         );
     }

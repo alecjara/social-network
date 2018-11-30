@@ -1,12 +1,36 @@
 const express = require('express');
 const app = express();
-//finds repeating words and compresses them to make the file A LOT smaller
+var multer = require('multer');
+var uidSafe = require('uid-safe');
+var path = require('path');
+const s3 = require('./s3');
+const s3Url = require('./config.json');
 const compression = require('compression');
 const bodyparser = require("body-parser");
 const db = require("./db");
 const { hash, compare } = require("./bcrypt");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+
+//boilerplate for uploading
+var diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + '/uploads');
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+var uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 3097152
+    }
+});
+//end of boilerplate (do not touch)
 
 app.disable("x-powered-by");
 
@@ -30,6 +54,7 @@ app.use(function(req, res, next){
 
 
 app.use(express.static('./public'));
+app.use(express.static('./uploads'));
 
 app.use(compression());
 
@@ -45,15 +70,14 @@ if (process.env.NODE_ENV != 'production') {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+
+
+
 //here goes the next
 //app.get()
 
 app.post("/registration", (req, res) => {
     console.log("req.body in /registration:", req.body);
-    //here we have to HASH the password
-    //we have to insert first,last,email,hashedpass into the db.js
-    //put userId in session
-    //send a response
     if (req.body.password != "") {
         hash(req.body.password).then(hash => {
             console.log("hashedpassword in post /registration:", hash);
@@ -103,19 +127,70 @@ app.post("/login", (req, res) => {
     });
 });
 
-//---end here
+//PART 3
+app.get("/user", (req, res) => {
+    //console.log("GET /user hit!");
+    db.getUserData(req.session.user_id
+    ).then((resp) => {
+        //console.log("resp on get /user:", resp);
+        res.json(resp);
+        //console.log("resp:", resp);
+    }).catch(err =>{
+        console.log("error in get /user:", err);
+    });
+});
 
 
+app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
+    if (req.file) {
+        var cUrl = s3Url.s3Url + req.file.filename;
+        //console.log("cUrl:", cUrl);
+        db.addImages(req.session.user_id, cUrl)
+            .then(() => {
+                res.json({success: true});
+            }).catch(err =>{
+                console.log("error in post /upload:", err);
+            });
+    } else {
+        res.json({
+            success: false
+        });
+    }
+});
 
+// app.post('/upload', (req, res) =>{
+//     db.addImages(req.session.user_id, req.file.filename).then(results => {
+//         res.json(results);
+//     });
+// });
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
 
-
-
+//DON'T TOUCH BELOW:
+app.get('/welcome', function(req, res) {
+    if (req.session.user_id) {
+        res.redirect('/');
+    } else {
+        res.sendFile(__dirname + '/index.html');
+    }
+});
 
 //this ROUTE should be at THE END!!!!!!!!!!!!!
 //this * is to render index.html even if we write a wrong url after localhost8080.
 app.get('*', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+    if (!req.session.user_id) {
+        res.redirect('/welcome');
+    } else {
+        res.sendFile(__dirname + '/index.html');
+    }
 });
+
+
+
+
+
 
 
 app.listen(8080, function() {

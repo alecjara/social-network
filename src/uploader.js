@@ -27,7 +27,10 @@ export default class Uploader extends React.Component {
 
         axios.post("/upload", formData).then(function(resp) {
             console.log("Resp in handleSubmit:", resp.data);
-            this.setState({profilePicUrl: resp.data.profilePicUrl});
+            this.props.updateImage(resp.data.profilePicUrl);
+        }).catch(error => {
+            this.setState({error: true});
+            console.log("error post upload:", error);
         });
 
         //after this then we need to figure out how to close this uploader and
@@ -39,10 +42,11 @@ export default class Uploader extends React.Component {
         return (
             <div>
                 <h1>upload an image!</h1>
+                <h2 onClick={this.props.hideUploader}>x</h2>
+                {this.state.error && <div>Error, please try again!!</div>}
                 <form onSubmit={this.handleSubmit}>
                     <input name="file" onChange={this.handleChange} type="file" accept="image/*" />
                     <button>upload</button>
-                    <h2 onClick={this.props.hideUploader(this.state.profilePicUrl)}></h2>
                 </form>
             </div>
         );

@@ -131,7 +131,7 @@ app.post("/login", (req, res) => {
 app.get("/user", (req, res) => {
     //console.log("GET /user hit!");
     db.getUserData(req.session.user_id
-    ).then((resp) => {
+    ).then(resp => {
         //console.log("resp on get /user:", resp);
         res.json(resp);
         //console.log("resp:", resp);
@@ -146,8 +146,8 @@ app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
         var cUrl = s3Url.s3Url + req.file.filename;
         //console.log("cUrl:", cUrl);
         db.addImages(req.session.user_id, cUrl)
-            .then(() => {
-                res.json({success: true});
+            .then(results => {
+                res.json(results);
             }).catch(err =>{
                 console.log("error in post /upload:", err);
             });
@@ -158,11 +158,6 @@ app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
     }
 });
 
-// app.post('/upload', (req, res) =>{
-//     db.addImages(req.session.user_id, req.file.filename).then(results => {
-//         res.json(results);
-//     });
-// });
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/");

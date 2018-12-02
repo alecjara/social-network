@@ -12,9 +12,9 @@ export default class App extends React.Component {
         };
         this.showUploader = this.showUploader.bind(this);
         this.hideUploader = this.hideUploader.bind(this);
+        this.updateImage = this.updateImage.bind(this);
     }
-    //this will be the one to change uploaderIsVisible to true
-    //showUploader is a function so it is not in state. I add this also inside the prop ProfilePic below
+
     showUploader() {
         this.setState({
             uploaderIsVisible: true
@@ -26,12 +26,14 @@ export default class App extends React.Component {
             uploaderIsVisible: false
         });
     }
-    //like mounted on vue:
-    //this only runs once the moment we refresh the page and the component renders
+
+    updateImage(cUrl) {
+        this.setState({
+            profilePicUrl: cUrl
+        });
+    }
+
     componentDidMount() {
-        //console.log("component mounted!!!!!");
-        //here is great to do axios request to get data from the server
-        //({data}) is destructuring this so we can use data only and before it was resp.data
         axios.get("/user").then(({data}) => {
             console.log("data in /get then:", data.rows[0]);
             this.setState(data.rows[0]);
@@ -42,15 +44,14 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
+                <h1>Welcome to Social Network</h1>
                 <Logo />
                 <ProfilePic
                     firstname = {this.state.firstname}
-                    profilePicUrl = {this.state.profilePicUrl}
+                    profilePicUrl = {this.state.profilePicUrl ? this.state.profilePicUrl: "/profile.png"}
                     showUploader = {this.showUploader}
                 />
-
-                {this.state.uploaderIsVisible && (<Uploader hideUploader={this.hideUploader}/> )}
-                <h1>Welcome to Social Network</h1>
+                {this.state.uploaderIsVisible && (<Uploader hideUploader={this.hideUploader} updateImage={this.updateImage}/> )}
             </div>
         );
 

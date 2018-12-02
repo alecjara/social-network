@@ -5,7 +5,7 @@ export default function ProfilePic(props) {
     return (
         <div>
             <h1>Welcome to profile pic, {props.firstname}</h1>
-            <img onClick = {props.showUploader} src = {props.profilePicUrl} />
+            <img id="profilepic" onClick = {props.showUploader} src = {props.profilePicUrl} />
         </div>
     );
 }

@@ -144,7 +144,7 @@ app.get("/user", (req, res) => {
 app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
     if (req.file) {
         var cUrl = s3Url.s3Url + req.file.filename;
-        //console.log("cUrl:", cUrl);
+        console.log("cUrl:", cUrl);
         db.addImages(req.session.user_id, cUrl)
             .then(results => {
                 res.json(results);

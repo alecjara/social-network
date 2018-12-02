@@ -23,19 +23,16 @@ export default class Uploader extends React.Component {
         e.preventDefault();
         console.log("handle submit");
         var formData = new FormData();
-        formData.append('file', this.form.profilePicUrl);
+        formData.append('file', this.state.file);
 
+        var self = this;
         axios.post("/upload", formData).then(function(resp) {
-            console.log("Resp in handleSubmit:", resp.data);
-            this.props.updateImage(resp.data.profilePicUrl);
+            console.log("Resp in handleSubmit upload:", resp);
+            self.props.updateImage(resp.data.rows[0].profilepicurl);
         }).catch(error => {
             this.setState({error: true});
             console.log("error post upload:", error);
         });
-
-        //after this then we need to figure out how to close this uploader and
-        //we need to show the new image instantly so we have to go to app and tell it to change the profilePicUrl and
-        //uploaderIsVisible set to false.
     }
 
     render() {

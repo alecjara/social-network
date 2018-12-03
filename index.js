@@ -140,7 +140,7 @@ app.get("/user", (req, res) => {
     });
 });
 
-//ROUTE part4
+// ROUTE part4
 // app.get("/user/:id.json", function(req, res) {
 //     db.getUserData(req.params.id).then(
 //         data => res.json(data)
@@ -163,6 +163,16 @@ app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
             success: false
         });
     }
+});
+
+app.post('/bio', (req, res) => {
+    db.updateBio(req.session.user_id, req.body.bio
+    ).then(resp => {
+        console.log("resp in post /bio:", resp);
+        res.json(resp);
+    }).catch(err =>{
+        console.log("error in post /bio:", err);
+    });
 });
 
 app.get("/logout", (req, res) => {

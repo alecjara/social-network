@@ -37,9 +37,9 @@ export default class Uploader extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id="uploader">
+                <h2 id="movex" onClick={this.props.hideUploader}>x</h2>
                 <h1>upload an image!</h1>
-                <h2 onClick={this.props.hideUploader}>x</h2>
                 {this.state.error && <div>Error, please try again!!</div>}
                 <form onSubmit={this.handleSubmit}>
                     <input name="file" onChange={this.handleChange} type="file" accept="image/*" />

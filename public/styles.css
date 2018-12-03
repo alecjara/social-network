@@ -1,5 +1,5 @@
 *{
-    font-family: "Trebuchet MS", Helvetica, Arial;
+    font-family: Zeyada, "Trebuchet MS", Arial;
 
 }
 
@@ -36,17 +36,39 @@ h3 {
     width: 80px;
     height: 100px;
     float: right;
-    margin-right: 20px
+    margin-right: 20px;
 
 }
 
-
-/* example from david:
-.profile-pic {
-    width: 70px;
-    height: 70px;
-}
 #profile .profilepic {
-    width: 300px;
+    width: 220px;
     height: 300px;
-} */
+    float: left;
+}
+
+
+#uploader {
+    position: absolute;
+    overflow: scroll;
+    border-radius: 5%;
+    padding: 8px;
+    z-index: 9999;
+    width: 15%;
+    top: 150px;
+    right: 150px;
+    /* min-height: 100px;
+    right: 0; */
+    background-color: white;
+    text-align: center;
+    color: black;
+    border: 3px black solid;
+
+}
+
+#movex {
+    float: right;
+}
+
+#probio {
+
+}

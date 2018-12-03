@@ -37,12 +37,12 @@ exports.addImages = function(cUrl, id) {
     );
 };
 
-exports.updateBio = function(bio, id) {
+exports.updateBio = function(id, bio) {
     return db.query(
         `UPDATE users
         SET bio = $2
         WHERE id = $1
-        RETURNING *`,
-        [bio, id]
+        RETURNING id, bio`,
+        [id, bio]
     );
 };

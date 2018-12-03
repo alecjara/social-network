@@ -169,9 +169,15 @@ app.post('/bio', (req, res) => {
     db.updateBio(req.session.user_id, req.body.bio
     ).then(resp => {
         console.log("resp in post /bio:", resp);
-        res.json(resp);
+        res.json({
+            user_id: req.session.userID,
+            bio: resp.rows[0].bio
+        });
     }).catch(err =>{
         console.log("error in post /bio:", err);
+        res.json({
+            success: false
+        });
     });
 });
 

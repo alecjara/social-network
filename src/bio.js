@@ -6,15 +6,16 @@ import axios from "./axios";
 import {Link} from "react-router-dom";
 
 export default class Bio extends React.Component {
-    constructor() {
+    constructor(props) {
         //console.log("props in class Uploader:", props);
-        super();
-        this.state = {};
+        super(props);
+        this.state = {
+            textAreaIsVisible: false
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.hideTextArea = this.hideTextArea.bind(this);
-        this.showTextArea = this.showTextArea.bind(this);
+        this.textAreaIsVisible = this.textAreaIsVisible.bind(this);
     }
 
     handleChange(e) {
@@ -26,39 +27,50 @@ export default class Bio extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         axios.post('/bio', this.state).then(resp => {
-            console.log("resp in then on post /bio", resp.data);
-            this.props.setBio(resp.data.rows[0].bio);
+            console.log("resp in then on post /bio", resp.data.bio);
+            this.props.setBio(resp.data.bio);
+            this.setState({
+                textAreaIsVisible: false
+            });
         }).catch(error => {
             this.setState({error: true});
             console.log("error post bio:", error);
         });
     }
 
-    showTextArea() {
+    textAreaIsVisible(e) {
+        e.preventDefault();
         this.setState({
+            bio: this.props.bio,
             textAreaIsVisible: true
         });
     }
-
-    hideTextArea() {
-        this.setState({
-            textAreaIsVisible: false
-        });
-    }
-
 
     render() {
         return (
             <div>
                 <h2>Please, add your BIO!</h2>
                 {this.state.error && <div>Error, please try again!!</div>}
-                <Link to="/" {textAreaIsVisible}>Click here to Edit your Bio</Link>
-                {this.state.textAreaIsVisible && (
+                {this.state.textAreaIsVisible ? (
                     <form onSubmit={this.handleSubmit}>
                         <textarea onChange ={this.handleChange} defaultValue = {this.state.bio} />
 
                         <button>save</button>
-                    </form>)}
+                    </form>
+                ) : (
+                    <div>
+                        {this.props.bio ? (
+                            <div>
+                                {this.props.bio}{" "}
+                                <Link onClick={this.textAreaIsVisible} to="/">Edit your Bio</Link>
+                            </div>
+                        ) : (
+                            <div>
+                                <Link onClick={this.textAreaIsVisible} to="/">Add your Bio</Link>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         );
 

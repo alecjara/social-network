@@ -56,17 +56,18 @@ export default class App extends React.Component {
                 <div id="top-container">
                     <Logo />
                     <ProfilePic
+                        className = "profilepic"
                         firstname = {this.state.firstname}
                         lastname = {this.state.lastname}
                         profilePicUrl = {this.state.profilepicurl ? this.state.profilepicurl : "/profile.png"}
                         showUploader = {this.showUploader}
                     />
                 </div>
-                <div>
+                <div id="probio">
                     <BrowserRouter>
-                        <div id="probio">
+                        <div>
                             <Route exact path="/" render={() => {
-                                return <Profile
+                                return ( <Profile
                                     id = {this.state.id}
                                     firstname = {this.state.firstname}
                                     lastname = {this.state.lastname}
@@ -74,7 +75,8 @@ export default class App extends React.Component {
                                     bio = {this.state.bio}
                                     setBio = {this.setBio}
                                     showUploader = {this.showUploader}
-                                />;
+                                />
+                                );
                             }} />
                         </div>
                     </BrowserRouter>

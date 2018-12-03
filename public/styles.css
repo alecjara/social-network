@@ -1,5 +1,6 @@
 *{
     font-family: Zeyada, "Trebuchet MS", Arial;
+    font-size: 20px;
 
 }
 
@@ -67,8 +68,4 @@ h3 {
 
 #movex {
     float: right;
-}
-
-#probio {
-
 }

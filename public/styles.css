@@ -1,7 +1,19 @@
 *{
     font-family: "Trebuchet MS", Helvetica, Arial;
+
 }
 
+#top-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px dashed grey;
+
+}
+
+h3 {
+    margin-right: 20px;
+    font-family: Zeyada;
+}
 
 .welcome-container {
     border: 3px solid black;
@@ -14,14 +26,27 @@
     background: white;
 }
 
-.sn1 {
+.sn2 {
 
-    width: 300px;
-    height: 300px;
-}
-
-#profilepic {
     width: 200px;
     height: 200px;
-    
 }
+
+.profilepic {
+    width: 80px;
+    height: 100px;
+    float: right;
+    margin-right: 20px
+
+}
+
+
+/* example from david:
+.profile-pic {
+    width: 70px;
+    height: 70px;
+}
+#profile .profilepic {
+    width: 300px;
+    height: 300px;
+} */

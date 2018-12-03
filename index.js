@@ -133,12 +133,19 @@ app.get("/user", (req, res) => {
     db.getUserData(req.session.user_id
     ).then(resp => {
         //console.log("resp on get /user:", resp);
-        res.json(resp);
+        res.json(resp.rows[0]);
         //console.log("resp:", resp);
     }).catch(err =>{
         console.log("error in get /user:", err);
     });
 });
+
+//ROUTE part4
+// app.get("/user/:id.json", function(req, res) {
+//     db.getUserData(req.params.id).then(
+//         data => res.json(data)
+//     );
+// });
 
 
 app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {

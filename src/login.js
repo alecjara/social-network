@@ -41,7 +41,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div>
-                <h1>Please,login!</h1>
+                <h2>Please,login!</h2>
                 {this.state.error && <div>Error, please try again!!</div>}
                 <form onSubmit={this.handleSubmit}>
                     <input onChange= {this.handleChange} name="email" type="text" placeholder="email" />

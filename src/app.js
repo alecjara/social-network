@@ -3,6 +3,9 @@ import axios from "./axios";
 import Logo from "./logo";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
+// import {BrowserRouter} from "react-router-dom";
+// import Profile from "./profile";
+
 
 export default class App extends React.Component {
     constructor() {
@@ -18,7 +21,7 @@ export default class App extends React.Component {
     showUploader() {
         this.setState({
             uploaderIsVisible: true
-        }, () => console.log("state showUploader:", this.state.profilePicUrl));
+        }, () => console.log("state showUploader:", this.state.profilepicurl));
     }
 
     hideUploader() {
@@ -29,26 +32,31 @@ export default class App extends React.Component {
 
     updateImage(cUrl) {
         this.setState({
-            profilePicUrl: cUrl
+            profilepicurl: cUrl
         });
     }
+
+    // setBio(bio) {
+    //     this.setState({
+    //         bio: bio
+    //     });
+    // }
 
     componentDidMount() {
         axios.get("/user").then(({data}) => {
-            console.log("data in /get then:", data.rows[0]);
-            this.setState(data.rows[0]);
+            console.log("data in /get then:", data);
+            this.setState(data);
         });
     }
 
-    //first it renders then it mounts
     render() {
         return (
-            <div>
-                <h1>Welcome to Social Network</h1>
+            <div id="top-container">
                 <Logo />
                 <ProfilePic
                     firstname = {this.state.firstname}
-                    profilePicUrl = {this.state.profilePicUrl ? this.state.profilePicUrl: "/profile.png"}
+                    lastname = {this.state.lastname}
+                    profilePicUrl = {this.state.profilepicurl ? this.state.profilepicurl : "/profile.png"}
                     showUploader = {this.showUploader}
                 />
                 {this.state.uploaderIsVisible && (<Uploader hideUploader={this.hideUploader} updateImage={this.updateImage}/> )}
@@ -57,3 +65,19 @@ export default class App extends React.Component {
 
     }
 }
+
+// <BrowserRouter>
+//     <div>
+//         <Route path="/" render={() => {
+//             return < Profile
+//                 id={this.state.id}
+//                 firstname={this.state.firstname}
+//                 lastname={this.state.lastname}
+//                 profilePicUrl={this.state.profilePicUrl}
+//                 bio={this.state.bio}
+//                 setBio={this.state.setBio}
+//                 showUploader={this.showUploader}
+//             />
+//         }} />
+//     </div>
+// </BrowserRouter>

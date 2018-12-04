@@ -53,7 +53,7 @@ export default class Bio extends React.Component {
                 {this.state.error && <div>Error, please try again!!</div>}
                 {this.state.textAreaIsVisible ? (
                     <form onSubmit={this.handleSubmit}>
-                        <textarea onChange ={this.handleChange} defaultValue = {this.state.bio} />
+                        <textarea name="bio" onChange ={this.handleChange} defaultValue = {this.state.bio} />
 
                         <button>save</button>
                     </form>

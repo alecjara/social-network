@@ -166,6 +166,7 @@ app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
 });
 
 app.post('/bio', (req, res) => {
+    //console.log("post bio:", req.body);
     db.updateBio(req.session.user_id, req.body.bio
     ).then(resp => {
         console.log("resp in post /bio:", resp);

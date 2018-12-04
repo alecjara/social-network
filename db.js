@@ -46,3 +46,22 @@ exports.updateBio = function(id, bio) {
         [id, bio]
     );
 };
+
+exports.otherPersonProfile = function(id) {
+    return db.query(
+        `SELECT id, firstname, lastname, email, bio, profilePicUrl
+         FROM users
+         WHERE id = $1`,
+        [id]
+    );
+};
+
+//we need two delete queries, one insert, one update
+//query for new table
+// SELECT * FROM friendships
+// WHERE (receiverid = $1 AND senderid = $2)
+// OR (receiverid = $2 and senderid = $1)
+
+
+//delete the rows cancelling when accepted is false
+//delete unfriend when accepting is true

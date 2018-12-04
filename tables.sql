@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS friendships;
 
 CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -8,5 +9,15 @@ CREATE TABLE users (
         password VARCHAR(200) NOT NULL,
         profilePicUrl TEXT,
         bio TEXT
+
+);
+
+
+CREATE TABLE friendships (
+    id SERIAL PRIMARY KEY,
+    receiverid INTEGER NOT NULL REFERENCES users(id),
+    senderid INTEGER NOT NULL REFERENCES users(id),
+    accepted BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );

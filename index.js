@@ -140,12 +140,6 @@ app.get("/user", (req, res) => {
     });
 });
 
-// ROUTE part4
-// app.get("/user/:id.json", function(req, res) {
-//     db.getUserData(req.params.id).then(
-//         data => res.json(data)
-//     );
-// });
 
 
 app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
@@ -171,7 +165,7 @@ app.post('/bio', (req, res) => {
     ).then(resp => {
         console.log("resp in post /bio:", resp);
         res.json({
-            user_id: req.session.userID,
+            user_id: req.session.user_id,
             bio: resp.rows[0].bio
         });
     }).catch(err =>{
@@ -180,6 +174,15 @@ app.post('/bio', (req, res) => {
             success: false
         });
     });
+});
+
+// ROUTE part5
+app.get("/user/:id/info", function(req, res) {
+    //console.log("get id.json:", req.params);
+    db.otherPersonProfile(req.params.id).then(data =>
+        res.json({ user_id: req.session.user_id, data: data })
+    );
+    console.log("testing user_id" );
 });
 
 app.get("/logout", (req, res) => {

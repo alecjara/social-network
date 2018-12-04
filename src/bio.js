@@ -62,6 +62,8 @@ export default class Bio extends React.Component {
                         {this.props.bio ? (
                             <div>
                                 {this.props.bio}{" "}
+                                <br />
+                                <br />
                                 <Link onClick={this.textAreaIsVisible} to="/">Edit your Bio</Link>
                             </div>
                         ) : (

@@ -1,7 +1,8 @@
 *{
-    font-family: Zeyada, "Trebuchet MS", Arial;
+    font-family: "Trebuchet MS", Arial;
     font-size: 23px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    font-weight: 200;
 
 }
 
@@ -14,7 +15,6 @@
 
 h3 {
     margin-right: 20px;
-    font-family: Zeyada;
 }
 
 .welcome-container {
@@ -47,6 +47,13 @@ h3 {
     height: 300px;
     float: left;
 }
+
+.userpic {
+    width: 220px;
+    height: 300px;
+    float: left;
+}
+
 
 
 #uploader {

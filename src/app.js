@@ -5,11 +5,12 @@ import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
 import {BrowserRouter, Route} from "react-router-dom";
 import Profile from "./profile";
+import OtherPersonProfile from "./otherpersonprofile";
 
 
 export default class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             uploaderIsVisible: false
         };
@@ -42,6 +43,7 @@ export default class App extends React.Component {
             bio: bio
         });
     }
+
 
     componentDidMount() {
         axios.get("/user").then(({data}) => {
@@ -78,6 +80,12 @@ export default class App extends React.Component {
                                 />
                                 );
                             }} />
+
+                            <Route path="/user/:id" render={ props => (
+                                <OtherPersonProfile {...props}
+                                    key = { props.match.url }
+                                />
+                            )} />
                         </div>
                     </BrowserRouter>
                 </div>

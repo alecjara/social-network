@@ -180,9 +180,14 @@ app.post('/bio', (req, res) => {
 app.get("/user/:id/info", function(req, res) {
     //console.log("get id.json:", req.params);
     db.otherPersonProfile(req.params.id).then(data =>
-        res.json({ user_id: req.session.user_id, data: data })
-    );
-    console.log("testing user_id" );
+        res.json({ user_id: req.session.user_id, data: data
+        })
+    ).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in get /user id:", err);
+    });
 });
 
 app.get("/logout", (req, res) => {

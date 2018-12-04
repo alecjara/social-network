@@ -11,8 +11,7 @@ export default class OtherPersonProfile extends React.Component {
     componentDidMount() {
         axios.get(`/user/${this.props.match.params.id}/info`).then(({data}) => {
             console.log("data in /get then of otherpersonprofile:", data);
-            if (data.data.rows.length == 0 || data.user_id == `${this.props.match.params.id}`
-            ) {
+            if (data.data.rows.length == 0 || data.user_id == `${this.props.match.params.id}`) {
                 this.props.history.push("/");
             } else {
                 this.setState(data.data.rows[0]);
@@ -20,6 +19,7 @@ export default class OtherPersonProfile extends React.Component {
             //redirects user to / route: use this if user writes nonsense in url
         }).catch(error => {
             console.log("error get user id SPICED:", error);
+            this.props.history.push("/");
         });
     }
 

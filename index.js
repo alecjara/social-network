@@ -70,12 +70,6 @@ if (process.env.NODE_ENV != 'production') {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-
-
-
-//here goes the next
-//app.get()
-
 app.post("/registration", (req, res) => {
     console.log("req.body in /registration:", req.body);
     if (req.body.password != "") {
@@ -105,7 +99,7 @@ app.post("/registration", (req, res) => {
         console.log("please, add a password");
     }
 
-}); //end post registration
+});
 
 app.post("/login", (req, res) => {
     db.getUser(req.body.email).then(result => {
@@ -142,7 +136,7 @@ app.get("/user", (req, res) => {
 
 
 
-app.post('/upload', uploader.single('file'), s3.upload, function(req, res) {
+app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
     if (req.file) {
         var cUrl = s3Url.s3Url + req.file.filename;
         console.log("cUrl:", cUrl);
@@ -176,8 +170,8 @@ app.post('/bio', (req, res) => {
     });
 });
 
-// ROUTE part5
-app.get("/user/:id/info", function(req, res) {
+
+app.get("/user/:id/info", (req, res) => {
     //console.log("get id.json:", req.params);
     db.otherPersonProfile(req.params.id).then(data =>
         res.json({ user_id: req.session.user_id, data: data
@@ -190,12 +184,53 @@ app.get("/user/:id/info", function(req, res) {
     });
 });
 
+//Part6
+app.get("/friends/:id", (req, res) => {
+    //console.log("my id:", req.session.user_id); //sender
+    //console.log("friends id:", req.params.id); //receiver
+    db.friendButton(req.params.id, req.session.user_id).then(data =>
+        res.json(data)
+    ).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in get /friends id:", err);
+    });
+});
+
+
+app.post("/friends2/:id", (req, res) => {
+    db.sendButton(req.params.id, req.session.user_id).then(data => {
+        console.log("data in friends2:", data);
+        res.json({success: true});
+    }).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in post /friends2 id:", err);
+    });
+});
+
+app.post("/cancelfriends/:id", (req, res) => {
+    db.cancelButton(req.params.id, req.session.user_id).then(data => {
+        console.log("data cancelfriend:", data);
+        res.json({success: true});
+    }).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in post / cancelfriends:", err);
+    });
+});
+
+
+
+//DON'T TOUCH BELOW:
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/");
 });
 
-//DON'T TOUCH BELOW:
 app.get('/welcome', function(req, res) {
     if (req.session.user_id) {
         res.redirect('/');
@@ -205,7 +240,6 @@ app.get('/welcome', function(req, res) {
 });
 
 //this ROUTE should be at THE END!!!!!!!!!!!!!
-//this * is to render index.html even if we write a wrong url after localhost8080.
 app.get('*', function(req, res) {
     if (!req.session.user_id) {
         res.redirect('/welcome');
@@ -213,12 +247,6 @@ app.get('*', function(req, res) {
         res.sendFile(__dirname + '/index.html');
     }
 });
-
-
-
-
-
-
 
 app.listen(8080, function() {
     console.log("I'm listening.");

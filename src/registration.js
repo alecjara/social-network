@@ -19,7 +19,7 @@ export default class Registration extends React.Component {
     //function for the input fields to handle the information (then we need to store the value in state)
     handleChange(e) {
         //console.log("handleChange running!", e.target.value);
-        console.log("name of input:", e.target.name);
+        //console.log("name of input:", e.target.name);
         this.setState({
             [e.target.name]: e.target.value
             //we add a callback function to console.log this.state and we do this after the } before the )
@@ -31,7 +31,7 @@ export default class Registration extends React.Component {
     handleSubmit(e) {
         //we need this so we can stop our page to reload when we click register button.
         e.preventDefault();
-        console.log("handleSubmit in registration Running!:", this.state);
+        //console.log("handleSubmit in registration Running!:", this.state);
         axios.post('/registration', this.state).then(resp => {
             console.log("resp in then on post /registration", resp);
             //if everything goes well and the user is registered we redirect him to /ROUTE

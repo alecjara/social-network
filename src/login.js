@@ -13,8 +13,8 @@ export default class Login extends React.Component {
     }
 
     handleChange(e) {
-        console.log("handleChange in login running!", e.target.value);
-        console.log("name of input:", e.target.name);
+        //console.log("handleChange in login running!", e.target.value);
+        //console.log("name of input:", e.target.name);
         this.setState({
             [e.target.name]: e.target.value
             //we add a callback function to console.log this.state and we do this after the } before the )

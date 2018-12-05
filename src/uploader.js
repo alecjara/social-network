@@ -21,13 +21,13 @@ export default class Uploader extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log("handle submit");
+        //console.log("handle submit");
         var formData = new FormData();
         formData.append('file', this.state.file);
 
         var self = this;
         axios.post("/upload", formData).then(function(resp) {
-            console.log("Resp in handleSubmit upload:", resp);
+            //console.log("Resp in handleSubmit upload:", resp);
             self.props.updateImage(resp.data.rows[0].profilepicurl);
         }).catch(error => {
             this.setState({error: true});

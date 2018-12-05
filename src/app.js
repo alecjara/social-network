@@ -47,7 +47,7 @@ export default class App extends React.Component {
 
     componentDidMount() {
         axios.get("/user").then(({data}) => {
-            console.log("data in /get then:", data);
+            //console.log("data in /get then:", data);
             this.setState(data);
         });
     }

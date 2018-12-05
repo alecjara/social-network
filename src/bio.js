@@ -27,7 +27,7 @@ export default class Bio extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         axios.post('/bio', this.state).then(resp => {
-            console.log("resp in then on post /bio", resp.data.bio);
+            //console.log("resp in then on post /bio", resp.data.bio);
             this.props.setBio(resp.data.bio);
             this.setState({
                 textAreaIsVisible: false

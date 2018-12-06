@@ -95,7 +95,7 @@ exports.acceptButton = function(receiver, sender) {
     );
 };
 
-exports.acceptButton = function(receiverid, senderid) {
+exports.deleteButton = function(receiverid, senderid) {
     return db.query(
         `DELETE FROM friendships
         WHERE (receiverid = $1 AND senderid = $2)
@@ -106,10 +106,12 @@ exports.acceptButton = function(receiverid, senderid) {
 };
 
 
-
-
-
-//we need two delete queries, one insert, one update
-//query for new table
-//delete the rows cancelling when accepted is false
-//delete unfriend when accepting is true
+//FOR PART7
+// const q = `
+//     SELECT users.id, firstname, lastname, profilePicUrl, accepted
+//     FROM friendships
+//     JOIN users
+//     ON (accepted = false AND receiverid = $1 AND senderid = users.id)
+//     OR (accepted = true AND receiverid = $1 AND senderid = users.id)
+//     OR (accepted = true AND senderid = $1 AND receiverid = users.id)
+// `;

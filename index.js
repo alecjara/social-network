@@ -224,8 +224,9 @@ app.post("/cancelfriends/:id", (req, res) => {
 });
 
 app.post("/acceptfriends/:id", (req, res) => {
-    db.acceptButton(req.params.id, req.session.user_id).then(() => {
-        //console.log("data acceptfriend:", data);
+    console.log("post acceptfriends");
+    db.acceptButton(req.session.user_id, req.params.id).then((data) => {
+        console.log("data acceptfriend2", data);
         res.json({success: true});
     }).catch(err =>{
         res.json({

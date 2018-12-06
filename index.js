@@ -200,8 +200,8 @@ app.get("/friends/:id", (req, res) => {
 
 
 app.post("/friends2/:id", (req, res) => {
-    db.sendButton(req.params.id, req.session.user_id).then(data => {
-        console.log("data in friends2:", data);
+    db.sendButton(req.params.id, req.session.user_id).then(() => {
+        //console.log("data in friends2:", data);
         res.json({success: true});
     }).catch(err =>{
         res.json({
@@ -212,8 +212,8 @@ app.post("/friends2/:id", (req, res) => {
 });
 
 app.post("/cancelfriends/:id", (req, res) => {
-    db.cancelButton(req.params.id, req.session.user_id).then(data => {
-        console.log("data cancelfriend:", data);
+    db.cancelButton(req.params.id, req.session.user_id).then(() => {
+        //console.log("data cancelfriend:", data);
         res.json({success: true});
     }).catch(err =>{
         res.json({
@@ -223,7 +223,29 @@ app.post("/cancelfriends/:id", (req, res) => {
     });
 });
 
+app.post("/acceptfriends/:id", (req, res) => {
+    db.acceptButton(req.params.id, req.session.user_id).then(() => {
+        //console.log("data acceptfriend:", data);
+        res.json({success: true});
+    }).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in post / acceptfriends:", err);
+    });
+});
 
+app.post("/deletefriends/:id", (req, res) => {
+    db.deleteButton(req.params.id, req.session.user_id).then(() => {
+        //console.log("data acceptfriend:", data);
+        res.json({success: true});
+    }).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in post / deletefriends:", err);
+    });
+});
 
 //DON'T TOUCH BELOW:
 app.get("/logout", (req, res) => {

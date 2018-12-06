@@ -66,6 +66,7 @@ exports.friendButton = function(receiver, sender) {
     );
 };
 
+
 exports.sendButton = function(receiver, sender) {
     return db.query(
         `INSERT into friendships (receiverid, senderid)
@@ -77,6 +78,15 @@ exports.sendButton = function(receiver, sender) {
 
 exports.cancelButton = function(receiver, sender) {
     return db.query(
+        `DELETE FROM friendships
+           WHERE (receiverid = $1 AND senderid = $2)
+           RETURNING *`,
+        [receiver, sender]
+    );
+};
+
+exports.acceptButton = function(receiver, sender) {
+    return db.query(
         `UPDATE friendships
            SET accepted = true
            WHERE (receiverid = $1 AND senderid = $2)
@@ -84,6 +94,19 @@ exports.cancelButton = function(receiver, sender) {
         [receiver, sender]
     );
 };
+
+exports.acceptButton = function(receiverid, senderid) {
+    return db.query(
+        `DELETE FROM friendships
+        WHERE (receiverid = $1 AND senderid = $2)
+        OR (receiverid = $2 and senderid = $1)
+        RETURNING *`,
+        [receiverid, senderid]
+    );
+};
+
+
+
 
 
 //we need two delete queries, one insert, one update

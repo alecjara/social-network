@@ -184,7 +184,6 @@ app.get("/user/:id/info", (req, res) => {
     });
 });
 
-//Part6
 app.get("/friends/:id", (req, res) => {
     //console.log("my id:", req.session.user_id); //sender
     //console.log("friends id:", req.params.id); //receiver
@@ -197,7 +196,6 @@ app.get("/friends/:id", (req, res) => {
         console.log("error indexjs in get /friends id:", err);
     });
 });
-
 
 app.post("/friends2/:id", (req, res) => {
     db.sendButton(req.params.id, req.session.user_id).then(() => {
@@ -245,6 +243,20 @@ app.post("/deletefriends/:id", (req, res) => {
             success: false
         });
         console.log("error indexjs in post / deletefriends:", err);
+    });
+});
+
+//part7 redux
+app.get('/friendslist', (req, res) => {
+    console.log("get lists, req.session.user_id", req.session.user_id);
+    db.lists(req.session.user_id).then((data) => {
+        console.log("Data.rows in get friendslist:", data);
+        res.json(data.rows);
+    }).catch(err =>{
+        res.json({
+            success: false
+        });
+        console.log("error indexjs in get / friendslist:", err);
     });
 });
 

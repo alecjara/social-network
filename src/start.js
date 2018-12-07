@@ -2,27 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Welcome from "./welcome";
 import App from "./app";
-//import Provider from "react-redux";
+//with Redux
+import { createStore, applyMiddleware } from 'redux';
+import reduxPromise from 'redux-promise';
+import {composeWithDevTools} from "redux-devtools-extension";
+import reducer from './reducer';
+import {Provider} from "react-redux";
 
 
-//check what else I need for redux from hotornot and check all imports!!
-// const store = createStore(
-//     reducer,
-//     composeWithDevTools(
-//         applyMiddleware(reduxPromise)
-//     )
-// );
-//
-// const elem = <Provider store={store}><App /></Provider>
-//
-
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(reduxPromise)));
 
 let component;
 if (location.pathname === "/welcome") {
     //render welcome
     component = <Welcome />;
 } else {
-    component = <App />;
+    component = (
+        <Provider store={store}>
+            <App />
+        </Provider>
+    );
 }
 
 

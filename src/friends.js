@@ -1,58 +1,85 @@
-// import {connect} from "react-redux";
-// import {receiveFriendsAndWannabes, unfriend, acceptedFriendRequest} from "./actions"
+import React from "react";
+import {connect} from "react-redux";
 //we import like that to use like this: receiveFriendsAndWannabes();
+import {receiveFriendsAndWannabes, unfriend, acceptfriend} from "./actions";
+// import { Link } from 'react-router-dom';
 
 //DO NOT EXPORT THIS COMPONENT!!!!!
-//THIS SHOULD BE A CLASS!!! because we want componentDidMount here!!
-//in componentDidMount use this:
-//this.props.dispatch(
-//receiveFriendsAndWannabes()
-//)
-// componentDidMount I dispatch the action for receiving a list of friends and wannabes USE this.props.dispatch
+class Friends extends React.Component {
+    constructor() {
+        super();
+        this.state = {};
+    }
 
-//Do this function HERE!!!
-// function mapStateToProps(state) {
-//     var list = state.RECEIVE_FRIENDS_WANNABES;
-//     return {
-//         //one prop
-//         friends: list && list.filter(
-//             //the ones who aren't friends get filtered out
-//             user => user.accepted == true
-//         ),
-//         //second prop
-//         wannabes: list && list.filter(
-//             user => !user.accepted
-//         ),
-//
-//
-//     };
-// }
+    componentDidMount() {
+        this.props.dispatch(receiveFriendsAndWannabes());
+    }
 
-//need a render method to render the two different lists this.props.friends and this.props.wannabes
-// render() {
-//     return (
-//         <div>
-//         <h1>Friends</h1>
-//  -----------HERE IS HOW WE DO THE LOOP!!!!!!!!!!!!!!!!!
-//         {this.props.friends.map(
-//             friend => {
-//                 return (
-//                     <div key={friend.id onClick={//here I dispatch the action}}>
-//                         <img src = {friend.url} />
-//                         {friend.fristname} {friend.lastname}
-//                     </div>
-//                 )
-//             }
-//         )}
-//         </div>
-//     )
-// }
+    render() {
+        const {friends, wannabes} = this.props;
+        if (!friends ) {
+            return null;
+        }
+        if (!wannabes) {
+            return null;
+        }
 
 
-//call connect and pass it the mapStateToProps function i defined i get back a function that i should call
-//and pass it the friends component you've created
-//Export the result of that (we don't export this whole file but the result here below)
-// export default connect(mapStateToProps)(friends);
+        return (
+            <div className="lists-container">
+                <h1>Friends</h1>
+                <div className="lists">
+                    {friends.map(friend => {
+                        return (
+                            <div key={friend.id}>
+                                <img id="friendsAndWannabesimg" src = {friend.profilepicurl} />
+                                {friend.firstname} {friend.lastname}
+                                <button onClick={() => this.props.dispatch(unfriend(friend.id))}>
+                                    EndFriendship
+                                </button>
+                            </div>
+                        );
+                    }
+                    )}
+                </div>
+                <h1>Wannabes</h1>
+                {wannabes.map(wannabe => {
+                    return (
+                        <div key={wannabe.id}>
+                            <img id="friendsAndWannabesimg" src = {wannabe.profilepicurl} />
+                            {wannabe.firstname} {wannabe.lastname}
+                            <button onClick={() => this.props.dispatch(acceptfriend(wannabe.id))}>
+                                AcceptFriendRequest
+                            </button>
+                        </div>
+                    );
+                }
+                )}
+            </div>
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    var list = state.friendsAndWannabes;
+    return {
+        //one prop
+        friends: list && list.filter(
+            //the ones who aren't friends get filtered out
+            user => user.accepted == true
+        ),
+        //second prop
+        wannabes: list && list.filter(
+            user => !user.accepted
+        ),
+    };
+}
+
+
+
+export default connect(mapStateToProps)(Friends);
+
+
 
 //On each friend element we need onClick that dispatches the unfriend action. pass id of friend
 //on each wannabe element we need onClick (read rest of info from David's list)

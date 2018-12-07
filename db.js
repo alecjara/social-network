@@ -105,13 +105,15 @@ exports.deleteButton = function(receiverid, senderid) {
     );
 };
 
-
 //FOR PART7
-// const q = `
-//     SELECT users.id, firstname, lastname, profilePicUrl, accepted
-//     FROM friendships
-//     JOIN users
-//     ON (accepted = false AND receiverid = $1 AND senderid = users.id)
-//     OR (accepted = true AND receiverid = $1 AND senderid = users.id)
-//     OR (accepted = true AND senderid = $1 AND receiverid = users.id)
-// `;
+exports.lists = function (id) {
+    return db.query(
+        `SELECT users.id, firstname, lastname, profilePicUrl, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND receiverid = $1 AND senderid = users.id)
+        OR (accepted = true AND receiverid = $1 AND senderid = users.id)
+        OR (accepted = true AND senderid = $1 AND receiverid = users.id)`,
+        [id]
+    );
+};

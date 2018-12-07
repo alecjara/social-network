@@ -1,11 +1,19 @@
 *{
-    font-family: "Trebuchet MS", Arial;
+    font-family: "Papyrus" ,"Trebuchet MS", Arial;
     font-size: 23px;
     letter-spacing: 1px;
     font-weight: 200;
-
+    /* background-color: snow; */
 }
 
+body {
+
+    /* background-image: url("snow.jpg"); */
+    /* z-index: -1; */
+
+
+
+}
 #top-container {
     display: flex;
     justify-content: space-between;
@@ -20,14 +28,23 @@ h3 {
 .welcome-container {
     /* border: 3px solid black; */
     /* background: violet; */
+    /* padding: 20px; */
+    display: block
 
-    padding: 20px;
+
+
+}
+
+.welcomelogo {
+    width: 200px;
+    height: 200px;
+    margin-left: 35%;
 }
 
 .registration-container {
-    border: 3px solid navy;
-    background: white;
-    
+    border: 1px dashed black;
+    /* background: white; */
+
 }
 
 .sn2 {
@@ -56,7 +73,12 @@ h3 {
     float: left;
 }
 
-
+#friendsAndWannabesimg {
+    width: 220px;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
 
 #uploader {
     position: absolute;

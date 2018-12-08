@@ -28,13 +28,15 @@ export default class OtherPersonProfile extends React.Component {
         return (
             <div className="opp-container">
                 <img className="userpic" onClick = {this.state.showUploader} src = {this.state.profilepicurl ? this.state.profilepicurl : "/profile.png"} />
-                {this.state.firstname} {this.state.lastname}
                 <br />
-                {this.state.email}
-                <br />
-                {this.state.bio}
-                <FriendButton otherUserId={this.props.match.params.id}/>
-
+                <div className="opp-info">
+                    {this.state.firstname} {this.state.lastname}
+                    <br />
+                    {this.state.email}
+                    <br />
+                    {this.state.bio}
+                    <FriendButton otherUserId={this.props.match.params.id}/>
+                </div>
 
             </div>
         );

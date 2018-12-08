@@ -224,7 +224,7 @@ app.post("/cancelfriends/:id", (req, res) => {
 app.post("/acceptfriends/:id", (req, res) => {
     console.log("post acceptfriends");
     db.acceptButton(req.session.user_id, req.params.id).then((data) => {
-        console.log("data acceptfriend2", data);
+        //console.log("data acceptfriend2", data);
         res.json({success: true});
     }).catch(err =>{
         res.json({
@@ -248,9 +248,9 @@ app.post("/deletefriends/:id", (req, res) => {
 
 //part7 redux
 app.get('/friendslist', (req, res) => {
-    console.log("get lists, req.session.user_id", req.session.user_id);
+    //console.log("get lists, req.session.user_id", req.session.user_id);
     db.lists(req.session.user_id).then((data) => {
-        console.log("Data.rows in get friendslist:", data);
+        //console.log("Data.rows in get friendslist:", data);
         res.json(data.rows);
     }).catch(err =>{
         res.json({

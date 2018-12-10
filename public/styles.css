@@ -92,6 +92,14 @@ h3 {
     flex-wrap: wrap;
 }
 
+#onlineimg {
+    width: 220px;
+    height: 300px;
+    object-fit: scale-down;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #listinfo {
     display: inline-block;
     margin-left: 20px;

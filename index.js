@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+//socket.io
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { origins: 'localhost:8080' });
+
 var multer = require('multer');
 var uidSafe = require('uid-safe');
 var path = require('path');
@@ -9,8 +13,10 @@ const compression = require('compression');
 const bodyparser = require("body-parser");
 const db = require("./db");
 const { hash, compare } = require("./bcrypt");
-const cookieSession = require("cookie-session");
+//const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+
+
 
 //boilerplate for uploading
 var diskStorage = multer.diskStorage({
@@ -37,12 +43,19 @@ app.disable("x-powered-by");
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
 
-app.use(
-    cookieSession({
-        secret: "I am always hungry",
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+
+//cookiesession for socket.io
+const cookieSession = require('cookie-session');
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always hungry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+//end of cookieSession for sockets
 
 //csurf always after cookieSession and bodyparser
 app.use(csurf());
@@ -283,6 +296,49 @@ app.get('*', function(req, res) {
     }
 });
 
-app.listen(8080, function() {
+//for socket.io we changed app.listen to server.listen
+server.listen(8080, function() {
     console.log("I'm listening.");
+});
+
+//make sure this is the end of everything:
+//onlineUsers object will be responsible for maintaining a list of onlineusers
+let onlineUsers = {};
+
+io.on("connection", socket => {
+    console.log(`User with socket id ${socket.id} just connected`);
+    let socket_id = socket.id;
+    let user_id = socket.request.session.user_id;
+    //console.log("socket session info:", user_id);
+    onlineUsers[socket_id] = user_id;
+    //console.log("onlineUsers:", onlineUsers);
+    let arrOfIds = Object.values(onlineUsers);
+    //console.log("arrOfIds:", arrOfIds);
+    //needs two arguments: 1 "name of mess in string", 2 any data (data from query, result from api...)
+    db.getUserByIds(arrOfIds).then(results => {
+        //console.log("results:", results);
+        socket.emit("onlineUsers", results.rows);
+        //to pass a db.query db.getUser(user_id).then(results => { socket.emit("catnip", results); });
+    }).catch(err => {
+        console.log("error in getUserByIds:", err);
+    });
+
+    if (arrOfIds.filter(id => id == user_id).length == 1) {
+        console.log("arrOfIdsFilter to get id:", user_id);
+
+        db.getJoinedId(user_id).then(results => {
+            socket.broadcast.emit("userJoined", results.rows[0].id);
+        }).catch(err => {
+            console.log("error in getJoinedId:", err);
+        });
+    }
+
+    //---
+    //when a user disconnects:
+    socket.on("disconnect", () => {
+        console.log(`socket with id ${ socket_id} just disconnected`);
+        io.sockets.emit("userLeft", user_id);
+        //we need to figure out if the user has actually left the web or closed one tab.
+        //we only want to fire if the user has loggedout for sure!!!!
+    });
 });

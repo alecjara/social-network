@@ -26,7 +26,30 @@ export default function reducer (state = {}, action) {
         return {
             ...state,
             friendsAndWannabes: state.friendsAndWannabes.filter(user => user.id != action.deletefriend)
-            //we need to use the filter here so we don't get the id of the
+        };
+    }
+
+
+    //part8 with socket.io
+    if (action.type == "ONLINE_USERS") {
+        return {
+            ...state,
+            onlineUsers: action.onlineUsers
+        };
+    }
+
+    if (action.type == "USER_JOINED") {
+        return {
+            ...state,
+            //here map
+            onlineUsers: [ ...state.onlineUsers, action.userJoined]
+        };
+    }
+
+    if (action.type == "USER_LEFT") {
+        return {
+            ...state,
+            onlineUsers: state.onlineUsers.filter(user => user.id != action.userLeft)
         };
     }
 

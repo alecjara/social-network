@@ -27,3 +27,26 @@ export async function acceptfriend(user_id) {
         acceptfriend: user_id
     };
 }
+
+//part8
+export async function onlineUsers(listOfOnlineUsers) {
+    return {
+        type: 'ONLINE_USERS',
+        onlineUsers: listOfOnlineUsers
+    };
+}
+
+export async function userJoined(userWhoJoined) {
+    return {
+        type: 'USER_JOINED',
+        userJoined: userWhoJoined
+    };
+}
+
+export async function userLeft(userWhoLeft) {
+
+    return {
+        type: 'USER_LEFT',
+        userLeft: userWhoLeft
+    };
+}

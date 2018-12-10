@@ -117,3 +117,14 @@ exports.lists = function (id) {
         [id]
     );
 };
+
+//SOCKETS.IO PART8
+exports.getUserByIds = arrOfIds => {
+    const query = `SELECT id, firstname, lastname, profilePicUrl FROM users WHERE id = ANY($1)`;
+    return db.query(query, [arrOfIds]);
+};
+
+exports.getJoinedId = id => {
+    const query = `SELECT id, firstname, lastname, profilePicUrl FROM users WHERE id = $1`;
+    return db.query(query, [id]);
+};

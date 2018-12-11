@@ -327,7 +327,7 @@ io.on("connection", socket => {
         console.log("arrOfIdsFilter to get id:", user_id);
 
         db.getJoinedId(user_id).then(results => {
-            socket.broadcast.emit("userJoined", results.rows[0].id);
+            socket.broadcast.emit("userJoined", results.rows[0]);
         }).catch(err => {
             console.log("error in getJoinedId:", err);
         });
@@ -336,8 +336,9 @@ io.on("connection", socket => {
     //---
     //when a user disconnects:
     socket.on("disconnect", () => {
-        console.log(`socket with id ${ socket_id} just disconnected`);
+        delete onlineUsers[socket_id];
         io.sockets.emit("userLeft", user_id);
+        console.log(`socket user_id ${ socket_id} just disconnected`);
         //we need to figure out if the user has actually left the web or closed one tab.
         //we only want to fire if the user has loggedout for sure!!!!
     });

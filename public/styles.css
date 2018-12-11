@@ -163,3 +163,15 @@ input {
 #movex {
     float: right;
 }
+
+.chat-container {
+    margin-top: 30px;
+    padding: 15px;
+    border: 2px solid white;
+
+}
+
+#chattext {
+    border: 2px dashed white;
+    width: 50%;
+}

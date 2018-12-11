@@ -2,7 +2,7 @@
 //all our code today will go here:
 
 import * as io from 'socket.io-client';
-import {onlineUsers , userJoined, userLeft} from "./actions";
+import {onlineUsers , userJoined, userLeft, addMessages} from "./actions";
 
 let socket;
 
@@ -14,7 +14,7 @@ export default function initSocket(store) {
         //2 argumens: 1st is event we are listening for (same name as in index.js)
         //2nd callback function that will run when client hears onlineUsers
         socket.on("onlineUsers", listOfOnlineUsers => {
-            console.log("listOfOnlineUsers:", listOfOnlineUsers);
+            //console.log("listOfOnlineUsers:", listOfOnlineUsers);
             //how de we access dispatch and do all the redux if we are not on the component!!!!
             //now that we have store here we can do:
             //here on store.dispatch we will pass an action creator
@@ -29,6 +29,20 @@ export default function initSocket(store) {
             store.dispatch(userLeft(userWhoLeft));
         });
 
+        //class 11.12
+        socket.on("messages", data => {
+            //console.log("data:", data);
+            store.dispatch(addMessages(data));
+        });
+
+        // socket.on("chatMessage", msg => {
+        //     console.log("messages", msg);
+        //     // store.dispatch()
+        // });
+        //
+        // socket.on("singleMessage", data => {
+        //     console.log("singleMesssage", data );
+        // });
     }
     //never forget this return!!
     return socket;

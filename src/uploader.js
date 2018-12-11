@@ -3,7 +3,7 @@ import axios from "./axios";
 
 export default class Uploader extends React.Component {
     constructor(props) {
-        console.log("props in class Uploader:", props);
+        //console.log("props in class Uploader:", props);
         super();
         this.state = {};
 

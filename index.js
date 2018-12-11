@@ -304,6 +304,38 @@ server.listen(8080, function() {
 //make sure this is the end of everything:
 //onlineUsers object will be responsible for maintaining a list of onlineusers
 let onlineUsers = {};
+//class 11.12
+// let arrOfMessages = [
+//     {
+//         animal: "quoka",
+//         cute: 20
+//     },
+//     {
+//         animal: "baby skunk",
+//         cute: 17
+//     },
+//     {
+//         animal: "lucky",
+//         cute: 9999
+//     },
+//     {
+//         animal: "blobfish",
+//         cute: -9999
+//     }
+//
+// ];
+//for part9 build an array of the most recent 10 chat messages socket.emit to client (sockets)
+//let chat = []
+//let chat = [
+//{
+//  message: "xxx",
+//  firstname: "xxx",
+//  lastname: "xxx",
+//  id: 22,
+//  profilePicUrl: "xxx"
+//}
+//]
+
 
 io.on("connection", socket => {
     console.log(`User with socket id ${socket.id} just connected`);
@@ -332,8 +364,33 @@ io.on("connection", socket => {
             console.log("error in getJoinedId:", err);
         });
     }
+    //class 11.12
+    //we want to render this array that we want in frontend using sockets
+    //first argument name, second argument name of array
 
-    //---
+
+    //part9
+    //receiving the message from frontend to server:
+    socket.on("chatMessage", msg => {
+        console.log("message from chat.js", msg);
+        db.insertMessages(msg, user_id).then(results => {
+            console.log("chatMessage results:", results);
+            db.currentUser(user_id).then(data => {
+                console.log("data in currentUser:", data);
+                // io.sockets.emit("singleMessage", data);
+            });
+        }).catch(err =>{
+            console.log("error indexjs / chatMessage:", err);
+        });
+    });
+
+    db.getMessages().then(results => {
+        console.log("getMessages results:", results.rows);
+        io.sockets.emit("messages", results.rows);
+    }).catch(err =>{
+        console.log("error indexjs / getMessages:", err);
+    });
+
     //when a user disconnects:
     socket.on("disconnect", () => {
         delete onlineUsers[socket_id];

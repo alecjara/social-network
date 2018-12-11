@@ -29,8 +29,6 @@ export default function reducer (state = {}, action) {
         };
     }
 
-
-    //part8 with socket.io
     if (action.type == "ONLINE_USERS") {
         return {
             ...state,
@@ -52,6 +50,24 @@ export default function reducer (state = {}, action) {
             onlineUsers: state.onlineUsers.filter(user => user.id != action.userLeft)
         };
     }
+
+
+    //PART9
+    if (action.type == "ADD_MESSAGES") {
+        //console.log("action in add messages reducer:", action);
+        return {
+            ...state,
+            addMessages: action.addMessages
+        };
+    }
+
+    // if (action.type == "SINGLE_MESSAGE") {
+    //     console.log("action in add single message:", action);
+    //     return {
+    //         ...state,
+    //         addSingleMessage: action.addSingleMessage
+    //     };
+    // }
 
     return state;
 

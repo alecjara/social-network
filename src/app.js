@@ -9,7 +9,7 @@ import OtherPersonProfile from "./otherpersonprofile";
 import Friends from "./friends";
 import OnlineUsers from "./onlineusers";
 import Chat from "./chat";
-
+import { Link } from 'react-router-dom';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -58,44 +58,51 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <div id="top-container">
-                    <Logo />
-                    <ProfilePic
-                        className = "profilepic"
-                        firstname = {this.state.firstname}
-                        lastname = {this.state.lastname}
-                        profilePicUrl = {this.state.profilepicurl ? this.state.profilepicurl : "/profile.png"}
-                        showUploader = {this.showUploader}
-                    />
-                </div>
-                <div id="probio">
-                    <BrowserRouter>
-                        <div>
-                            <Route exact path="/" render={() => {
-                                return ( <Profile
-                                    id = {this.state.id}
-                                    firstname = {this.state.firstname}
-                                    lastname = {this.state.lastname}
-                                    profilePicUrl = {this.state.profilepicurl}
-                                    bio = {this.state.bio}
-                                    setBio = {this.setBio}
-                                    showUploader = {this.showUploader}
-                                />
-                                );
-                            }} />
+                <BrowserRouter>
+                    <div>
+                        <div id="top-container">
+                            <Logo />
+                            <Link to="/online">ONLINE</Link>
+                            <Link to="/chat">CHAT</Link>
+                            <Link to="/friends/">FRIENDS</Link>
+                            <a href="/logout">LOGOUT</a>
+                            <ProfilePic
+                                className = "profilepic"
+                                firstname = {this.state.firstname}
+                                lastname = {this.state.lastname}
+                                profilePicUrl = {this.state.profilepicurl ? this.state.profilepicurl : "/profile.png"}
+                                showUploader = {this.showUploader}
+                            />
 
-                            <Route path="/user/:id" render={ props => (
-                                <OtherPersonProfile {...props}
-                                    key = { props.match.url }
-                                />
-                            )} />
-                            <Route path="/friends/" component={Friends} />
-                            <Route path="/online" component={OnlineUsers} />
-
-                            <Route path="/chat" component={Chat} />
                         </div>
-                    </BrowserRouter>
-                </div>
+                        <div id="probio">
+                            <div>
+                                <Route exact path="/" render={() => {
+                                    return ( <Profile
+                                        id = {this.state.id}
+                                        firstname = {this.state.firstname}
+                                        lastname = {this.state.lastname}
+                                        profilePicUrl = {this.state.profilepicurl}
+                                        bio = {this.state.bio}
+                                        setBio = {this.setBio}
+                                        showUploader = {this.showUploader}
+                                    />
+                                    );
+                                }} />
+
+                                <Route path="/user/:id" render={ props => (
+                                    <OtherPersonProfile {...props}
+                                        key = { props.match.url }
+                                    />
+                                )} />
+                                <Route path="/friends/" component={Friends} />
+                                <Route path="/online" component={OnlineUsers} />
+
+                                <Route path="/chat" component={Chat} />
+                            </div>
+                        </div>
+                    </div>
+                </BrowserRouter>
 
                 {this.state.uploaderIsVisible && (<Uploader hideUploader={this.hideUploader} updateImage={this.updateImage}/> )}
             </div>

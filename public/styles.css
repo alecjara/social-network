@@ -35,7 +35,7 @@ h3 {
 .welcomelogo {
     width: 300px;
     height: 300px;
-    margin-left: 30%;
+    margin-left: 40%;
 }
 
 .registration-container {
@@ -43,7 +43,7 @@ h3 {
     /* background: white; */
     /* display: flex; */
     display: block;
-    margin-left: 30%
+    margin-left: 43%
 }
 
 .sn2 {
@@ -55,7 +55,8 @@ h3 {
 .profilepic {
     width: 90px;
     height: 110px;
-    float: right;
+    /* float: right; */
+    /* right: 0; */
     margin-right: 20px;
     margin-top: 40px;
 
@@ -128,7 +129,7 @@ input {
 
 .logincont {
     display: block;
-    margin-left: 30%
+    margin-left: 43%
 }
 
 .regbutton {

@@ -24,6 +24,8 @@ class Chat extends React.Component {
             console.log("user's message:", e.target.value);
             //emiting a message from client to server 2part
             socket.emit("chatMessage", e.target.value);
+            e.target.value = "";
+            e.preventDefault();
         }
     }
 

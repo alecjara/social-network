@@ -19,9 +19,9 @@ export async function unfriend(user_id) {
 }
 
 export async function acceptfriend(user_id) {
-    console.log("before!");
+    //console.log("before!");
     await axios.post("/acceptfriends/" + user_id);
-    console.log("after!");
+    //console.log("after!");
     return {
         type: 'ACCEPT_FRIEND_REQUEST',
         acceptfriend: user_id

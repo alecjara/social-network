@@ -7,6 +7,7 @@ export default function Profile(props) {
     return (
         <div id="profile">
             <ProfilePic showUploader={props.showUploader} profilePicUrl={props.profilePicUrl} />
+            <br/>
             {props.firstname} {props.lastname}
             <Bio bio={props.bio} setBio={props.setBio} />
         </div>

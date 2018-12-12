@@ -62,7 +62,7 @@ export default class FriendButton extends React.Component {
 
             // if (data.length) {
             if (data.data.rows.length == 0) {
-                console.log("get friends data.rows[0]:", data.data.rows);
+                //console.log("get friends data.rows[0]:", data.data.rows);
                 this.setState({
                     buttonText: "MakeFriendRequest"
                 });

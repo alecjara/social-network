@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "./axios";
-//import {Link} from "react-router-dom";
+
 
 export default class Login extends React.Component {
     constructor() {
@@ -25,7 +25,7 @@ export default class Login extends React.Component {
     handleSubmit(e) {
         //we need this so we can stop our page to reload when we click register button.
         e.preventDefault();
-        console.log("handleSubmit in login Running!:", this.state);
+        //console.log("handleSubmit in login Running!:", this.state);
         axios.post('/login', this.state).then(resp => {
             console.log("resp in then on post /login", resp);
             //if everything goes well and the user is registered we redirect him to /ROUTE

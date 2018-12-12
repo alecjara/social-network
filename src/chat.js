@@ -45,17 +45,20 @@ class Chat extends React.Component {
 
         let arrOfMessages = this.props.messages.map((elem, messageId) => {
             return (
-                <div key={messageId}>
-                    <img id="onlineimg" src = {elem.profilepicurl} />
-                    {elem.firstname} {elem.lastname} {elem.createtime}
-                    <p>{elem.messages}</p>
+                <div key={messageId} id="eachchat">
+                    <img id="chatimg" src = {elem.profilepicurl} />
+                    <div id="textmess">
+                        {elem.firstname} {elem.lastname} ({elem.createtime})
+                        <br />
+                        <b>{elem.messages}</b>
+                    </div>
                 </div>
             );
         });
 
         return (
             <div className="chat-container">
-                <h1>chat running!</h1>
+                <h1>CHAT</h1>
                 <div className="messages-container" ref={elem => (this.elem = elem)}>
                     { arrOfMessages }
                 </div>

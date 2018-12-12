@@ -19,8 +19,9 @@ class OnlineUsers extends React.Component {
                 <h1>Online users:</h1>
                 {this.props.user && this.props.user.map(online => {
                     return (
-                        <div key={online.id}>
+                        <div key={online.id} id="eachonline">
                             <img id="onlineimg" src = {online.profilepicurl} />
+                            <br />
                             {online.firstname} {online.lastname}
                         </div>
                     );
@@ -33,7 +34,7 @@ class OnlineUsers extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log("this are states:", state && state);
+    //console.log("this are states:", state && state);
     var list = state.onlineUsers;
     return {
         user: list

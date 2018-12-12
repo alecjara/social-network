@@ -1,5 +1,4 @@
 import React from 'react';
-// import axios from "./axios";
 import ProfilePic from "./profilepic";
 import Bio from "./bio";
 

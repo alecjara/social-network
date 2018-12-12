@@ -364,20 +364,16 @@ io.on("connection", socket => {
             console.log("error in getJoinedId:", err);
         });
     }
-    //class 11.12
-    //we want to render this array that we want in frontend using sockets
-    //first argument name, second argument name of array
-
 
     //part9
     //receiving the message from frontend to server:
     socket.on("chatMessage", msg => {
-        console.log("message from chat.js", msg);
+        //console.log("message from chat.js", msg);
         db.insertMessages(msg, user_id).then(results => {
-            console.log("chatMessage results:", results);
-            db.currentUser(user_id).then(data => {
-                console.log("data in currentUser:", data);
-                // io.sockets.emit("singleMessage", data);
+            //console.log("chatMessage results:", results);
+            db.currentUser(results.rows[0].id).then(data => {
+                //console.log("data in currentUser:", data);
+                io.sockets.emit("singleMessage", data.rows[0]);
             });
         }).catch(err =>{
             console.log("error indexjs / chatMessage:", err);
@@ -385,7 +381,7 @@ io.on("connection", socket => {
     });
 
     db.getMessages().then(results => {
-        console.log("getMessages results:", results.rows);
+        //console.log("getMessages results:", results.rows);
         io.sockets.emit("messages", results.rows);
     }).catch(err =>{
         console.log("error indexjs / getMessages:", err);

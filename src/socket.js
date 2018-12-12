@@ -2,7 +2,7 @@
 //all our code today will go here:
 
 import * as io from 'socket.io-client';
-import {onlineUsers , userJoined, userLeft, addMessages} from "./actions";
+import {onlineUsers , userJoined, userLeft, addMessages, singleMessage} from "./actions";
 
 let socket;
 
@@ -29,20 +29,15 @@ export default function initSocket(store) {
             store.dispatch(userLeft(userWhoLeft));
         });
 
-        //class 11.12
         socket.on("messages", data => {
             //console.log("data:", data);
             store.dispatch(addMessages(data));
         });
 
-        // socket.on("chatMessage", msg => {
-        //     console.log("messages", msg);
-        //     // store.dispatch()
-        // });
-        //
-        // socket.on("singleMessage", data => {
-        //     console.log("singleMesssage", data );
-        // });
+        socket.on("singleMessage", data => {
+            //console.log("singleMesssage", data );
+            store.dispatch(singleMessage(data));
+        });
     }
     //never forget this return!!
     return socket;

@@ -51,7 +51,6 @@ export async function userLeft(userWhoLeft) {
     };
 }
 
-//class 11.12
 export function addMessages(messages) {
     //console.log("action at messages running!");
     return {
@@ -60,9 +59,9 @@ export function addMessages(messages) {
     };
 }
 
-// export function addSingleMessage(singleMessage) {
-//     return {
-//         type: "SINGLE_MESSAGE",
-//         addSingleMessage: singleMessage
-//     };
-// }
+export function singleMessage(singleMessage) {
+    return {
+        type: "SINGLE_MESSAGE",
+        singleMessage: singleMessage
+    };
+}

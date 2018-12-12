@@ -61,13 +61,13 @@ export default function reducer (state = {}, action) {
         };
     }
 
-    // if (action.type == "SINGLE_MESSAGE") {
-    //     console.log("action in add single message:", action);
-    //     return {
-    //         ...state,
-    //         addSingleMessage: action.addSingleMessage
-    //     };
-    // }
+    if (action.type == "SINGLE_MESSAGE") {
+        console.log("reducer in add single message:", action);
+        return {
+            ...state,
+            addMessages: [...state.addMessages, action.singleMessage]
+        };
+    }
 
     return state;
 

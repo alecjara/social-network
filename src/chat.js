@@ -29,9 +29,11 @@ class Chat extends React.Component {
 
     componentDidUpdate() {
         //console.log("this.elem:", this.elem);
-        //here write code to change the scroll top to bottom to see
+        if (!this.elem) {
+            return null;
+        }
+        this.elem.scrollTop = this.elem.scrollHeight;
         //I might not need this code on my social network
-        //this.elem.scrollTop = this.elem.scrollHeight;
     }
 
     render() {
@@ -42,14 +44,10 @@ class Chat extends React.Component {
 
 
         let arrOfMessages = this.props.messages.map((elem, messageId) => {
-
-            //elem is every message in my array
-            //console.log("elem:", elem);
-            //render de animals arrays
             return (
                 <div key={messageId}>
                     <img id="onlineimg" src = {elem.profilepicurl} />
-                    {elem.firstname} {elem.lastname}
+                    {elem.firstname} {elem.lastname} {elem.createtime}
                     <p>{elem.messages}</p>
                 </div>
             );

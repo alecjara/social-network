@@ -143,17 +143,24 @@ exports.insertMessages = (messages, user_id) => {
 //select messages
 exports.getMessages = () => {
     return db.query(
-        `SELECT u.firstname, u.lastname, u.profilePicUrl, c.messages AS messages, c.id AS "messageId"
+        `SELECT u.firstname, u.lastname, u.profilePicUrl, c.messages AS messages, c.id AS "messageId", c.createtime
         FROM chats AS c
         LEFT JOIN users AS u
         ON c.user_id = u.id
-        ORDER BY c.id ASC
+        ORDER BY c.createtime ASC
         LIMIT 10`
     );
 };
 
 
 exports.currentUser = id => {
-    const query = `SELECT id AS user_id, firstname, lastname, profilePicUrl FROM users WHERE id = $1`;
-    return db.query(query, [id]);
+    return db.query(
+        `SELECT u.firstname, u.lastname, u.profilePicUrl, c.messages AS messages, c.id AS "messageId", c.createtime
+        FROM chats AS c
+        LEFT JOIN users AS u
+        ON c.user_id = u.id
+        WHERE c.id = $1
+        ORDER BY c.createtime ASC`,
+        [id]
+    );
 };

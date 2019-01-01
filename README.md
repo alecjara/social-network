@@ -1,15 +1,13 @@
-# social-network
+# Social Network "Buddies"
 React, Redux, Socket.io
 
-	
-Social Network "Buddies"
 
-Summary
+## Summary
 
 Buddies is a social networking application built with the idea to connect people who want to chat with friends. 
 This is a single-page application made primarily with React.js.
 
-Tech used:
+## Tech used:
 
 React.js and Redux
 Express.js on Node.js
@@ -18,7 +16,7 @@ socket.io
 AWS S3 Cloud Storage
 Webpack as a module bundler
 
-Features
+## Features
 
 The web application includes a user registration and a login forms.
 Users can upload profile pictures, if they'd like, otherwise a default one will be assigned to them
@@ -30,3 +28,11 @@ Additionally, users are provided the option to either accept / decline friend re
 members.
 Users can see in real-time who else is online.
 A public chatroom can be used where every user who is connected can see the last ten messages of the public conversation.
+
+![sn1](/sn1.png)
+
+![sn2](/sn2.png)
+
+![sn3](/sn3.png)
+
+![sn4](/sn4.png)

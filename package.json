@@ -41,7 +41,7 @@
         "redux-devtools-extension": "^2.13.2",
         "redux-promise": "^0.5.3",
         "socket.io": "^2.5.0",
-        "spiced-pg": "^1.0.0",
+        "spiced-pg": "^1.0.4",
         "uid-safe": "^2.1.4",
         "webpack": "^5.75.0",
         "webpack-dev-middleware": "^1.8.4"
